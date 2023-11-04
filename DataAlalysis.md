@@ -187,7 +187,7 @@ kilkaKolumn =  tabela[ ["Imię", "Nazwisko"] ]
 
 W wyniku czego dostajemy nowy DataFrame:
 
-![image-20231103191241163](img\image-20231103191241163.png)
+![image-20231103191241163](img/image-20231103191241163.png)
 
 ```
 # Sprawdznie typu danej
@@ -212,8 +212,8 @@ tabelaADataFrame = pd.DataFrame( tabelaA )
 tabelaBDataFrame = pd.DataFrame( tabelaB )
 ```
 W rezultacie otrzymujemy:
-![tablaADataFrame](img\populationOfCounties.jpg)
-![tablaBDataFrame](img\capitalCitiesOfCountries.jpg)
+![tablaADataFrame](img/populationOfCounties.jpg)
+![tablaBDataFrame](img/capitalCitiesOfCountries.jpg)
 Przyjmijmy, że naszym celem jest otrzymanie informacji na temat kraju stolicy oraz zamieszkującej go ludności zebranych w razem w jednej tabeli. W tym celu używamy funkcji merge() z biblioteki Pandas.
 
 
