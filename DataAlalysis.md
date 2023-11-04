@@ -212,8 +212,9 @@ tabelaADataFrame = pd.DataFrame( tabelaA )
 tabelaBDataFrame = pd.DataFrame( tabelaB )
 ```
 W rezultacie otrzymujemy:
-![tablaADataFrame](https://github.com/04Pasja/DataAnalysis/blob/main/img/populationOfCounties.jpg)
-![tablaBDataFrame](img/capitalCitiesOfCountries.jpg)
+![tablaADataFrame](img/capitalCitiesOfCountries.JPG)
+![tablaBDataFrame](img/populationOfCountries.JPG)
+
 Przyjmijmy, że naszym celem jest otrzymanie informacji na temat kraju stolicy oraz zamieszkującej go ludności zebranych w razem w jednej tabeli. W tym celu używamy funkcji merge() z biblioteki Pandas.
 
 
