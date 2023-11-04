@@ -187,7 +187,7 @@ kilkaKolumn =  tabela[ ["Imię", "Nazwisko"] ]
 
 W wyniku czego dostajemy nowy DataFrame:
 
-![image-20231103191241163](C:\Users\Wojtek\AppData\Roaming\Typora\typora-user-images\image-20231103191241163.png)
+![image-20231103191241163](img\image-20231103191241163.png)
 
 ```
 # Sprawdznie typu danej
@@ -201,19 +201,19 @@ Biblioteka Pandas umożliwia łączenie tabel z danymi poprzed dopasowywanie ich
 Załóżmy, że mamy dwa zestawy danych zebrancyh w tabletach: 
 ```
 # Tworzymy zestawy danych - tym razem za pomoca słowników ( dictionaries )
-tabelaA = { "Kraj": ["Francja", "Hiszpania", "Włochy", "Argentyna", "Egipt", "Indie"],
-            "Ludność": [67.75, 47.42, 59.11, 45.81, 109.3, 1408] }
+tabelaA = { "Kraj": ["Francja", "Gruzja", "Hiszpania", "Włochy", "Nigeria", "Argentyna", "Egipt", "Indie"],
+            "Ludność [mln]": [67.75, 3.70, 47.42, 59.11, 213.4, 45.81, 109.3, 1408] }
 
-tabelaB = { "Kraj": ["Francja", "Hiszpania", "Włochy", "Argentyna", "Egipt", "Indie"],
-            "Stolica": ["Paryż", "Madryt", "Rzym", "Buenos Aires", "Kair", "Delhi"] }
+tabelaB = { "Kraj": ["Włochy", "Marako", "Hiszpania", "Indonezja", "Argentyna","Francja", "Egipt", "Korea Południowa", "Indie"],
+            "Stolica": ["Rzym", "Rabat", "Madryt", "Dżakarta", "Buenos Aires", "Paryż", "Kair", "Seul", "Delhi"] }
 
 # Na podstawie tabalaA oraz tabelaB generujemy DataFrame
-TabelaADataFrame = pd.DataFrame( tabelaA )
-TabelaBDataFrame = pd.DataFrame( tabelaB )
+tabelaADataFrame = pd.DataFrame( tabelaA )
+tabelaBDataFrame = pd.DataFrame( tabelaB )
 ```
 W rezultacie otrzymujemy:
-( image )
-
+![tablaADataFrame](img\populationOfCounties.jpg)
+![tablaBDataFrame](img\capitalCitiesOfCountries.jpg)
 Przyjmijmy, że naszym celem jest otrzymanie informacji na temat kraju stolicy oraz zamieszkującej go ludności zebranych w razem w jednej tabeli. W tym celu używamy funkcji merge() z biblioteki Pandas.
 
 
