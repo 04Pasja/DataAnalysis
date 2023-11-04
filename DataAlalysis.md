@@ -196,6 +196,27 @@ type( kilkaKolumn )
 
 Wywołując funkcję type() dla obiektu 'kilkaKolumn' otrzymujemy jako rezultat: pandas.core.frame.DataFrame, a więc mamy potwierdzenie, że jest to DataFrame. 
 
+## Łączenie danych z różnych tablic
+Biblioteka Pandas umożliwia łączenie tabel z danymi poprzed dopasowywanie ich do siebie wegług kryterium. Najlepszym odpowiednikiem z programu Excel jest funkcja WYSZUKAJ.PIONOWO().
+Załóżmy, że mamy dwa zestawy danych zebrancyh w tabletach: 
+```
+# Tworzymy zestawy danych - tym razem za pomoca słowników ( dictionaries )
+tabelaA = { "Kraj": ["Francja", "Hiszpania", "Włochy", "Argentyna", "Egipt", "Indie"],
+            "Ludność": [67.75, 47.42, 59.11, 45.81, 109.3, 1408] }
+
+tabelaB = { "Kraj": ["Francja", "Hiszpania", "Włochy", "Argentyna", "Egipt", "Indie"],
+            "Stolica": ["Paryż", "Madryt", "Rzym", "Buenos Aires", "Kair", "Delhi"] }
+
+# Na podstawie tabalaA oraz tabelaB generujemy DataFrame
+TabelaADataFrame = pd.DataFrame( tabelaA )
+TabelaBDataFrame = pd.DataFrame( tabelaB )
+```
+W rezultacie otrzymujemy:
+( image )
+
+Przyjmijmy, że naszym celem jest otrzymanie informacji na temat kraju stolicy oraz zamieszkującej go ludności zebranych w razem w jednej tabeli. W tym celu używamy funkcji merge() z biblioteki Pandas.
+
+
 ## Źródła
 
 https://www.youtube.com/watch?v=WcDaZ67TVRo
