@@ -151,7 +151,7 @@ tabela = pd.DataFrame( dane, columns = ["Imię", "Nazwisko", "Wiek"] )
 
 Rezultat:
 
-![image-20231103190440569](C:\Users\Wojtek\AppData\Roaming\Typora\typora-user-images\image-20231103190440569.png)
+![Creating Date Frame Image](img/createDataFrame.JPG)
 
 ```
 # Selekcja jednej kolumny z tabeli danych ( DataFrame )
@@ -160,7 +160,7 @@ kulumna = tabela[ "Imię" ]
 
 Wybranie kolumny powoduje wydzielenie części danych. 
 
-![image-20231103190724022](C:\Users\Wojtek\AppData\Roaming\Typora\typora-user-images\image-20231103190724022.png)
+![Column Selection Image](img/columnSelection.JPG)
 
 Tak otrzymane dane są typu: pandas.core.series.Series. Możemy to sprawdzić za pomocą funkcji type().
 
@@ -168,15 +168,12 @@ Tak otrzymane dane są typu: pandas.core.series.Series. Możemy to sprawdzić za
 # Sprawdzenie typu danych
 type( tabela )
 ```
-
-
-
 Ten sam efekt można uzyskać używając innego zapisu:
-
 ```
 # Inna metoda delekcji kolumn
 kolumna = tabela.Imię
 ```
+Zamiast nawiasów kwadratowych stosujemy kropkę, a po niej podajemy nazwę kulumny. Zwróć uwagę, że nazwa kolumny nie znajduje sie w cudzysłowie. 
 
 W celu wybrania większej ilości kolumn możemy  użyć komendy:
 
@@ -187,7 +184,7 @@ kilkaKolumn =  tabela[ ["Imię", "Nazwisko"] ]
 
 W wyniku czego dostajemy nowy DataFrame:
 
-![image-20231103191241163](img/image-20231103191241163.png)
+![Column Multi Selection Image](img/columnMultiSelection.JPG)
 
 ```
 # Sprawdznie typu danej
@@ -201,19 +198,21 @@ Biblioteka Pandas umożliwia łączenie tabel z danymi poprzed dopasowywanie ich
 Załóżmy, że mamy dwa zestawy danych zebrancyh w tabletach: 
 ```
 # Tworzymy zestawy danych - tym razem za pomoca słowników ( dictionaries )
-tabelaA = { "Kraj": ["Francja", "Gruzja", "Hiszpania", "Włochy", "Nigeria", "Argentyna", "Egipt", "Indie"],
-            "Ludność [mln]": [67.75, 3.70, 47.42, 59.11, 213.4, 45.81, 109.3, 1408] }
 
-tabelaB = { "Kraj": ["Włochy", "Marako", "Hiszpania", "Indonezja", "Argentyna","Francja", "Egipt", "Korea Południowa", "Indie"],
+tabelaA = { "Kraj": ["Włochy", "Marako", "Hiszpania", "Indonezja", "Argentyna","Francja", "Egipt", "Korea Południowa", "Indie"],
             "Stolica": ["Rzym", "Rabat", "Madryt", "Dżakarta", "Buenos Aires", "Paryż", "Kair", "Seul", "Delhi"] }
+
+tabelaB = { "Kraj": ["Francja", "Gruzja", "Hiszpania", "Włochy", "Nigeria", "Argentyna", "Egipt", "Indie"],
+            "Ludność [mln]": [67.75, 3.70, 47.42, 59.11, 213.4, 45.81, 109.3, 1408] }
 
 # Na podstawie tabalaA oraz tabelaB generujemy DataFrame
 tabelaADataFrame = pd.DataFrame( tabelaA )
 tabelaBDataFrame = pd.DataFrame( tabelaB )
 ```
-W rezultacie otrzymujemy:
-![tablaADataFrame](img/capitalCitiesOfCountries.JPG)
-![tablaBDataFrame](img/populationOfCountries.JPG)
+Tak wyglądają tabele wyrenderowane w Jupyter Notebook:
+
+![Capital Cities of Countries Data Frame Image](img/capitalCitiesOfCountries.JPG)
+![Population Of Countries Data Frame Image](img/populationOfCountries.JPG)
 
 Przyjmijmy, że naszym celem jest zestawienie informacji na temat kraju stolicy oraz zamieszkującej go ludności razem w jednej tabeli. W tym celu używamy funkcji merge() z biblioteki Pandas.
 Domyślnie wynikiem scalenia jest część wspólna dla dla obu zestawów danych. Na szczęście nie jest to jedyna możliwość.
@@ -222,34 +221,41 @@ Wyróżniamy 4 sposoby łączenia tabel danych:
 2. Scalenie zewnętrzne ( outer merge )
 3. Scalenie lewostrnonne ( left merge )
 4. Scalenie prawostronne ( right merte )
+5. Scalenie na krzyż ( cross merge )
 
 ### 1. Scalenie wewnętrzne ( inner merge )
 Scalenie wewnętrzne jest opcją domyślną, zatem jeśli nie wyspecyfikujemy rodzaju scalenia to nastąpi to właśnie w ten sposób. Polega ono na znalezieniu części wspólnej zestawów danych. W naszym przykładzie częścią wspólną będzią kraje, dla których da się skompletować całość danych tj. nazwę kraju, stolicę oraz liczbę ludności.
-( img inner merge conception )
+
+<font color = "red"> =======>( img inner merge conception ) </font>
 ```
 # Użycie funkcji merge() z parametrem 'how' o wartości 'inner'
-scalenieWewnetrzne = pd.merge( tabelaBDataFrame, tabelaADataFrame, how = "inner" )
+scalenieWewnetrzne = pd.merge( tabelaADataFrame, tabelaBDataFrame, how = "inner" )
 
 # Lub też krócej
-scalenieWewnetrzne = pd.merge( tabelaBDataFrame, tabelaADataFrame )
+scalenieWewnetrzne = pd.merge( tabelaADataFrame, tabelaBDataFrame )
 ```
-A oto rezultat takiego scalenia:
-( img inner merge result )
-Jak widać kraje, które nie występowały w drugim zestawie danych nie zostały uwzględnione w końcowej tabeli.
+A oto rezultat takiego scalenia: \
+![Inner Merge Result Image](img/innerMerge.JPG) \
+Jak widać kraje, które nie występowały w drugim zestawie danych, nie zostały uwzględnione w końcowej tabeli.
 
 ### 2. Scalenie zewnętrzne ( outer merge )
-Ten rodzaj scalenia uwzgęnia wszystkie dane, zatem w rezultacie powinniśmy otrzymać tabelę, w której bedą wszyskie pojawiające się kraje. Miejsca, dla których brakuje danych pozostaną puste - o tym, że komórka jest pusta informuje nas symbol 'NaN' ( skrót: "Not a Number" ).
-( img outer merge conception )
+Ten rodzaj scalenia uwzgęnia wszystkie dane, zatem w rezultacie powinniśmy otrzymać tabelę, w której bedą wszyskie pojawiające się kraje. Miejsca, dla których brakuje danych pozostaną puste - o tym, że komórka jest pusta informuje nas symbol 'NaN' ( skrót: "Not a Number" ). \
+<font color = "red"> =======>( img outer merge conception ) </font>
 ```
 # Użycie funkcji merge() z parametrem 'how' o wartości 'outer'
-scalenieZewnetrzne = pd.merge( tabelaBDataFrame, tabelaADataFrame, how = "outer" )
+scalenieZewnetrzne = pd.merge( tabelaADataFrame, tabelaBDataFrame, how = "outer" )
 ```
-( img outer merge result )
+![Outer Merge Result Image](img/outerMerge.JPG) \
+
+### 3. Scalenie lewostrnonne ( left merge )
+### 4. Scalenie prawostronne ( right merte )
+### 5. Scalenie na krzyż ( cross merge )
 
 ## Źródła
 
-https://www.youtube.com/watch?v=WcDaZ67TVRo
-https://www.edlitera.com/blog/posts/pandas-vs-excel-comparison
-https://www.edlitera.com/en/blog/posts/pandas-merge-dataframes
-https://www.edlitera.com/en/blog/posts/pandas-derived-columns
-https://sparkbyexamples.com/pandas/pandas-sort-dataframe-by-multiple-columns/
+https://www.youtube.com/watch?v=WcDaZ67TVRo \
+https://www.edlitera.com/blog/posts/pandas-vs-excel-comparison \
+https://www.edlitera.com/en/blog/posts/pandas-merge-dataframes \
+https://www.edlitera.com/en/blog/posts/pandas-derived-columns \
+https://sparkbyexamples.com/pandas/pandas-sort-dataframe-by-multiple-columns/ 
+
