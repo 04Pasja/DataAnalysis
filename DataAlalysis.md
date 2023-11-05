@@ -215,8 +215,36 @@ W rezultacie otrzymujemy:
 ![tablaADataFrame](img/capitalCitiesOfCountries.JPG)
 ![tablaBDataFrame](img/populationOfCountries.JPG)
 
-Przyjmijmy, że naszym celem jest otrzymanie informacji na temat kraju stolicy oraz zamieszkującej go ludności zebranych w razem w jednej tabeli. W tym celu używamy funkcji merge() z biblioteki Pandas.
+Przyjmijmy, że naszym celem jest zestawienie informacji na temat kraju stolicy oraz zamieszkującej go ludności razem w jednej tabeli. W tym celu używamy funkcji merge() z biblioteki Pandas.
+Domyślnie wynikiem scalenia jest część wspólna dla dla obu zestawów danych. Na szczęście nie jest to jedyna możliwość.
+Wyróżniamy 4 sposoby łączenia tabel danych:
+1. Scalenie wewnętrzne ( inner merge )
+2. Scalenie zewnętrzne ( outer merge )
+3. Scalenie lewostrnonne ( left merge )
+4. Scalenie prawostronne ( right merte )
 
+### 1. Scalenie wewnętrzne ( inner merge )
+Scalenie wewnętrzne jest opcją domyślną, zatem jeśli nie wyspecyfikujemy rodzaju scalenia to nastąpi to właśnie w ten sposób. Polega ono na znalezieniu części wspólnej zestawów danych. W naszym przykładzie częścią wspólną będzią kraje, dla których da się skompletować całość danych tj. nazwę kraju, stolicę oraz liczbę ludności.
+( img inner merge conception )
+```
+# Użycie funkcji merge() z parametrem 'how' o wartości 'inner'
+scalenieWewnetrzne = pd.merge( tabelaBDataFrame, tabelaADataFrame, how = "inner" )
+
+# Lub też krócej
+scalenieWewnetrzne = pd.merge( tabelaBDataFrame, tabelaADataFrame )
+```
+A oto rezultat takiego scalenia:
+( img inner merge result )
+Jak widać kraje, które nie występowały w drugim zestawie danych nie zostały uwzględnione w końcowej tabeli.
+
+### 2. Scalenie zewnętrzne ( outer merge )
+Ten rodzaj scalenia uwzgęnia wszystkie dane, zatem w rezultacie powinniśmy otrzymać tabelę, w której bedą wszyskie pojawiające się kraje. Miejsca, dla których brakuje danych pozostaną puste - o tym, że komórka jest pusta informuje nas symbol 'NaN' ( skrót: "Not a Number" ).
+( img outer merge conception )
+```
+# Użycie funkcji merge() z parametrem 'how' o wartości 'outer'
+scalenieZewnetrzne = pd.merge( tabelaBDataFrame, tabelaADataFrame, how = "outer" )
+```
+( img outer merge result )
 
 ## Źródła
 
