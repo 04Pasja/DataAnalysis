@@ -220,7 +220,7 @@ Wyróżniamy 4 sposoby łączenia tabel danych:
 1. Scalenie wewnętrzne ( inner merge )
 2. Scalenie zewnętrzne ( outer merge )
 3. Scalenie lewostrnonne ( left merge )
-4. Scalenie prawostronne ( right merte )
+4. Scalenie prawostronne ( right merge )
 5. Scalenie na krzyż ( cross merge )
 
 ### 1. Scalenie wewnętrzne ( inner merge )
@@ -240,7 +240,7 @@ Jak widać kraje, które nie występowały w drugim zestawie danych, nie został
 
 ### 2. Scalenie zewnętrzne ( outer merge )
 Ten rodzaj scalenia uwzgęnia wszystkie dane, zatem w rezultacie powinniśmy otrzymać tabelę, w której bedą wszyskie pojawiające się kraje. Miejsca, dla których brakuje danych pozostaną puste - o tym, że komórka jest pusta informuje nas symbol 'NaN' ( skrót: "Not a Number" ). \
-<font color = "red"> =======>( img outer merge conception ) </font>
+<font color = "red"> =======>( img outer merge conception ) </font> 
 ```
 # Użycie funkcji merge() z parametrem 'how' o wartości 'outer'
 scalenieZewnetrzne = pd.merge( tabelaADataFrame, tabelaBDataFrame, how = "outer" )
@@ -248,8 +248,31 @@ scalenieZewnetrzne = pd.merge( tabelaADataFrame, tabelaBDataFrame, how = "outer"
 ![Outer Merge Result Image](img/outerMerge.JPG) \
 
 ### 3. Scalenie lewostrnonne ( left merge )
+<font color = "red"> =======>( img left merge conception ) </font> \
+Efektem scalenia lewostronnego jest zachowanie całej pierwszej tabeli oraz dołączenie do niej wartości z drugiej. Wiersze, dla których brak dopasowania w nowo powstałej tabeli będą zawierały puste komórki ( 'NaN' ).
+```
+# Użycie funkcji merge() z parametrem 'how' o wartości 'left'
+scalenieLewostronne = pd.merge( tabelaADataFrame, tabelaBDataFrame, how = "left" )
+```
+A oto wydruk powyższej tabeli: \
+![Left Merge Result Image](img/leftMerge.JPG) \
+
+
 ### 4. Scalenie prawostronne ( right merte )
+<font color = "red"> =======>( img right merge conception ) </font> \
+Scalając prawostronnie bierzmy wszystkie dane z drugiej tabeli i dodajemy do niej dppasowanie wartości w pierwszej tabeli. Tutaj również braki w danych objawiają się pustą komórką. 
+```
+# Użycie funkcji merge() z parametrem 'how' o wartości 'right'
+scaleniePrawostronne = pd.Prawostronne( tabelaADataFrame, tabelaBDataFrame, how = "right" )
+```
+W wyniku czego dostajemy: \
+![Left Merge Result Image](img/rightMerge.JPG) \
+
 ### 5. Scalenie na krzyż ( cross merge )
+<font color = "red"> =======>( img cross merge conception ) </font> \
+
+### Obserwacje
+Zwróć uwagę na rozmiar otzymywanych tabel w zależności od rodzaju użytego scalenia. To ile nasza wyjściowa tabela będdzie miała wierszy zależy od tego co było bazą do scalenia. W scaleniu lewostronnym bazą była pierwsza tabela ( lewa ), więc ilośći wierszy jest identyczna jak w pierwszej tabeli. Scalając prawostronnie naszą bazą jest druga tabela ( prawa ), zatem ilość wierszy będzie taka jak w prawej tabeli. W efekcje wewnętrzenego scalenia dostaniemy wiersze, które możemy skasyfikować jako część wspólną, natomiast wynikiem zewnętrzniego jest suma unikalnych wierszy. Dokonując scalenia krzyżowego ilość wierszy jest iloczynem ilości wierszy obu tabel ( zestawienie każdego elementu z każdym ).
 
 ## Źródła
 
