@@ -129,10 +129,7 @@ dataFrameZSlownika = pd.DataFrame( slownik )
    ```
 
    Inne funkcje importujące:
-   
-   * read_csv()
-   
-   - read_excel()
+   - read_csv()
    - read_json()
    - read_pickle()
    - read_sql()
@@ -192,6 +189,10 @@ type( kilkaKolumn )
 ```
 
 Wywołując funkcję type() dla obiektu 'kilkaKolumn' otrzymujemy jako rezultat: pandas.core.frame.DataFrame, a więc mamy potwierdzenie, że jest to DataFrame. 
+
+### Odwoływanie się do konkretnych wierszy
+Wybór konkretnego wiersza rózwnież można zrealizować w różny sposób. Możemy odwołać się do niego poprzez nr indeksu, nazwę, czy też przefiltrować pod kątej wartości lub spełnienia zadanego warunku.
+
 
 ## Łączenie danych z różnych tablic
 Biblioteka Pandas umożliwia łączenie tabel z danymi poprzed dopasowywanie ich do siebie wegług kryterium. Najlepszym odpowiednikiem z programu Excel jest funkcja WYSZUKAJ.PIONOWO().
