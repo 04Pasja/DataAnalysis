@@ -72,8 +72,12 @@ pip install xlwt openpyxl xlrd
 
 W API Pandas DataFrame jest odpowiednikiem Excel`owego arkusza. 
 DataFrame możemy stworzyć na kilka sposobów. 
+1. Za pomocą 'tablicy' ( Array ) z biblioteki NumPy
+2. Przy użyciu Python`owej listy ( bez użycia NumPy )
+4. Importując dane z pliku zewnętrznego
+3. Używając 'słownika' ( Dictionary )
 
-1. Za pomocą 'tablicy' ( Array ) z biblioteki NumPy:
+#### 1. Za pomocą 'tablicy' ( Array ) z biblioteki NumPy:
 
 ``` 
 # Utworzenie tablicy:
@@ -90,7 +94,7 @@ jako kolejne argumenty podajemy odpowiednio słowa kluczowe 'columns' oraz 'inde
 dataFrame = pd.DataFrame( tablica, index = ["wiersz1", "wiersz2"], columns = ["kulumna1", "kolumna2" ])
 ```
 
-2. Przy użyciu Python`owej listy ( bez użycia NumPy ):
+#### 2. Przy użyciu Python`owej listy ( bez użycia NumPy ):
 
    ```
    # Utworznie lity:
@@ -102,7 +106,7 @@ dataFrame = pd.DataFrame( tablica, index = ["wiersz1", "wiersz2"], columns = ["k
 
    Utworzony DataFrame będzie identyczny jak poprzedni.
 
-3. Używając 'słownika' ( Dictionary ):
+#### 3. Używając 'słownika' ( Dictionary ):
 ```
 # Utworznie słownika ( dictionary data type ):
 slownik = { "kolumna1": [1, 2], "kolumna2": [3, 4] }
@@ -113,7 +117,7 @@ dataFrameZSlownika = pd.DataFrame( slownik )
 
    Używając słownika nie musimy nadawać nazw kolumnom, ponieważ nazwy zostały już nadane przy tworzeniu 'dictionatry' i zostaną zastosowanie do DataFrame
 
-4. Importując dane z pliku zewnętrznego:
+#### 4. Importując dane z pliku zewnętrznego:
 
    Zależnie od rodzaju pliku z jakiego chcemy wczytać dane użyta funkcja będzie się różnić.
    Importując dane z Excel`a należy użyć funkcji read_excel() i podać ścieżkę żądanego pliku.
@@ -193,6 +197,41 @@ Wywołując funkcję type() dla obiektu 'kilkaKolumn' otrzymujemy jako rezultat:
 ### Odwoływanie się do konkretnych wierszy
 Wybór konkretnego wiersza rózwnież można zrealizować w różny sposób. Możemy odwołać się do niego poprzez nr indeksu, nazwę, czy też przefiltrować pod kątej wartości lub spełnienia zadanego warunku.
 
+Selekcji wierszy można dokonnać poprzez: \
+1. Podanie nazwy wiersza do funkcji składowej loc()
+2. Wskazanie wiersza poprzez indeks - funckja składowa iloc()
+3. Użycie wurażenia warunkowego do przefiltrowania wierszy
+
+#### 1. Podanie nazwy wiersza do funkcji składowej loc()
+W przypadkum, gdy wiersze są nazwane, możemy użyć tej nazwy do ich wywołania.
+```
+ # Wybranie jednego wiersza po nazwie:
+ # Zostanie wybrany 1 wiersz o nazwie "pierwszy"
+ wiersz = tabela.loc["pierwszy"]
+
+ # Wybranie kilku wierszy używając zakresu:
+ # Zostaną wybrzne wszystkie wiersze pomiędzy "pierszym" a "trzecim" z nimi włącznie
+ zakresWierszy = tabela.loc["pierwszy" : "trzeci"]
+
+ # Wybranie kilku wierszy przy użyciu listy
+ # Zostaną wybrane 2 wiersze o nazwach "pierwszy" oraz "trzeci"
+ listaWierszy = tabela.loc[ ["pierwszy", "trzeci"] ]
+```
+Jeżeli natomiast wiersze nie mają nazw - to posługujemy sie numerami indeksów. Domyślnie indeksowanie odbywa się od zera, ale nic nie szkodzi na przeszkodzie, by nadać własne numery indeków. Odbywa się to na tej samej zasadzie co poprzedni, z tą różnicą, że numeru indeksu nie ujmujemy w cudzysłów ( "" ).
+```
+ # Wybranie jednego wiersza po indeksie:
+ wiersz = tabela.loc[0]
+
+ # Wybranie kilku wierszy używając zakresu:
+ zakresWierszy = tabela.loc[0:2]
+
+ # Wybranie kilku wierszy przy użyciu listy
+ listaWierszy = tabela.loc[ [0, 2] ]
+```
+
+#### 2. Wskazanie wiersza poprzez indeks - funckja składowa iloc()
+#### 3. Użycie wurażenia warunkowego do przefiltrowania wierszy
+ 
 
 ## Łączenie danych z różnych tablic
 Biblioteka Pandas umożliwia łączenie tabel z danymi poprzed dopasowywanie ich do siebie wegług kryterium. Najlepszym odpowiednikiem z programu Excel jest funkcja WYSZUKAJ.PIONOWO().
@@ -275,6 +314,10 @@ W wyniku czego dostajemy: \
 ### Obserwacje
 Zwróć uwagę na rozmiar otzymywanych tabel w zależności od rodzaju użytego scalenia. To ile nasza wyjściowa tabela będdzie miała wierszy zależy od tego co było bazą do scalenia. W scaleniu lewostronnym bazą była pierwsza tabela ( lewa ), więc ilośći wierszy jest identyczna jak w pierwszej tabeli. Scalając prawostronnie naszą bazą jest druga tabela ( prawa ), zatem ilość wierszy będzie taka jak w prawej tabeli. W efekcje wewnętrzenego scalenia dostaniemy wiersze, które możemy skasyfikować jako część wspólną, natomiast wynikiem zewnętrzniego jest suma unikalnych wierszy. Dokonując scalenia krzyżowego ilość wierszy jest iloczynem ilości wierszy obu tabel ( zestawienie każdego elementu z każdym ).
 
+## Web scraping - wyciądanie danych ze stron internetowych
+
+
+
 ## Źródła
 
 https://www.youtube.com/watch?v=WcDaZ67TVRo \
@@ -282,4 +325,4 @@ https://www.edlitera.com/blog/posts/pandas-vs-excel-comparison \
 https://www.edlitera.com/en/blog/posts/pandas-merge-dataframes \
 https://www.edlitera.com/en/blog/posts/pandas-derived-columns \
 https://sparkbyexamples.com/pandas/pandas-sort-dataframe-by-multiple-columns/ 
-
+https://pandas.pydata.org/docs/getting_started/intro_tutorials/03_subset_data.html
