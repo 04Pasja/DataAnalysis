@@ -119,37 +119,60 @@ dataFrameZSlownika = pd.DataFrame( slownik )
 
 #### 4. Importując dane z pliku zewnętrznego:
 
-   Zależnie od rodzaju pliku z jakiego chcemy wczytać dane użyta funkcja będzie się różnić.
-   Importując dane z Excel`a należy użyć funkcji read_excel() i podać ścieżkę żądanego pliku.
-
-   ```
-   dataFrameZPlikuExcel = pd.read_excel( "moj_excel.xlsx" )
-   ```
-
-   Wczytanie konkretnych kolumn ( tutaj: od A do D ) z konkretnego arkusza ( tutaj: Arkusz1 ) będzie wyglądać tak:
-
-   ```
-   dataFrameZPlikuExcel = pd.read_excel( "moj_excel.xlsx", sheet = "Arkusz1", usecols = "A:D" )
-   ```
-
-   Inne funkcje importujące:
+   Zależnie od rodzaju pliku z jakiego chcemy wczytać dane użyta funkcja będzie się różnić. \
+   Dostępne funkcje importujące:
+   - read_excel()
    - read_csv()
    - read_json()
    - read_pickle()
    - read_sql()
 
+   ##### 1) Importowanie z plików Excel
+
+   Importując dane z Excel`a należy użyć funkcji read_excel() i podać ścieżkę żądanego pliku.
+   ```
+   # Import danych z pliku Excel - jako argument podajemy ścieżkę oraz nazwę pliku.
+   dataFrameZPlikuExcel = pd.read_excel( "dane/moj_excel.xlsx" )
+   ```
+
+   Wczytanie konkretnych kolumn ( tutaj: od A do D ) z konkretnego arkusza ( tutaj: Arkusz1 ) będzie wyglądać tak:
+
+   ```
+   dataFrameZPlikuExcel = pd.read_excel( "dane/moj_excel.xlsx", sheet = "Arkusz1", usecols = "A:D" )
+   ```
+[Więcej użytecznych informacji na temat wczytywania plików Excel można znaleźć w dokumentacji Pandas - klikając tutaj]( https://pandas.pydata.org/docs/reference/api/pandas.read_excel.html)
+
+   ##### 2) Importowanie danych z plików o rozszerzeniu csv 
+
+   Chyba najczęściej używanią funkcją jest read_csv(). Pozwala ona zaczerpnąć dane z pliku csv ( comma-separated value ), w którym wartości domyślnie są rodzielone przecinkami. 
+   ```
+   # Import danych z pliku csv - jako argument podajemy ścieżkę oraz nazwę pliku.
+    dataFrameZPlikuCSV = pd.read_csv( "dane/moje_dane.csv" )
+   ```
+   Może zdarzyć się sytuacja, gdy separadtorem wartości jest inny symbol niż "," ( przecinek ). Przykładowo mogłaby to być pionowa kreska "|" ( ang. pipe ). Chcąc sprecyzować jakiego rozdzielacza wartości chcemy użyć posługujemy się parametrem "sep" i podajemy w cudzysłowie interesujący nas znak lub ciąg znaków, tutaj: "|".
+   ```
+   # Zmieniamy domyśly separator danych z "," na "|" przesyłając go parametrowi "sep"
+   dataFrameZPlikuCSV = pd.read_csv( "dane/moje_dane.csv", sep = "|" )
+   ```
+   Tak, jak w przypadku importu danych z Excel`a, również i tu można na etapie tworzenia DataFrame wybrać kolumny, kótre zostaną wczytane. Podobnie jak  poprzednio używamy parametru "usecols" i podajemy mu nazwy kolumn jeśli takie istnieją, lub indeksy kolumn.
+   ```
+   # Parametr "usecols" dostaje nazwy kolumn
+   dataFrameZPlikuCSV = pd.read_csv( "moje_dane.csv", usecols = ["Imię", "Nawzwisko", "Wiek"] )
+
+   # Wskazujemy kolumny po numerze indeksu kolumny
+   dataFrameZPlikuCSV = pd.read_csv( "moje_dane.csv", usecols = [0, 1, 4] )
+   ```
+[Więcej użytecznych informacji na temat wczytywnia danych a plików.csv można znaleźć w dokumentacji Pandas - klikając tutaj](https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html)
+
 ## Wybieranie / zaznaczanie danych
 
 ### Odwoływanie się do konkretnych kolumn
-
-
 
 ```
 # Przykładawa tabla danych ( DataFrame ) - utworzon za pomocą listy
 dane = [ ["Ala", "Nowak", 20], ["Urszula", "Kowalska", 34], ["Karol", "Strasburger", 76] ]
 tabela = pd.DataFrame( dane, columns = ["Imię", "Nazwisko", "Wiek"] )
 ```
-
 Rezultat:
 
 ![Creating Date Frame Image](img/createDataFrame.JPG)
@@ -197,7 +220,7 @@ Wywołując funkcję type() dla obiektu 'kilkaKolumn' otrzymujemy jako rezultat:
 ### Odwoływanie się do konkretnych wierszy
 Wybór konkretnego wiersza rózwnież można zrealizować w różny sposób. Możemy odwołać się do niego poprzez nr indeksu, nazwę, czy też przefiltrować pod kątej wartości lub spełnienia zadanego warunku.
 
-Selekcji wierszy można dokonnać poprzez: \
+Selekcji wierszy można dokonnać poprzez:
 1. Podanie nazwy wiersza do funkcji składowej loc()
 2. Wskazanie wiersza poprzez indeks - funckja składowa iloc()
 3. Użycie wurażenia warunkowego do przefiltrowania wierszy
