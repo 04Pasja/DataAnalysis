@@ -28,6 +28,7 @@ pip install notebook
 * Pandas
 * Matplotlib
 * Seaborn
+* OpenPyXL
 
 #### Instalacja
 
@@ -169,7 +170,7 @@ dataFrameZSlownika = pd.DataFrame( slownik )
 ### Odwoływanie się do konkretnych kolumn
 
 ```
-# Przykładawa tabla danych ( DataFrame ) - utworzon za pomocą listy
+# Przykładawa tabla danych ( DataFrame ) - utworzony za pomocą listy
 dane = [ ["Ala", "Nowak", 20], ["Urszula", "Kowalska", 34], ["Karol", "Strasburger", 76] ]
 tabela = pd.DataFrame( dane, columns = ["Imię", "Nazwisko", "Wiek"] )
 ```
@@ -226,7 +227,7 @@ Selekcji wierszy można dokonnać poprzez:
 3. Użycie wurażenia warunkowego do przefiltrowania wierszy
 
 #### 1. Podanie nazwy wiersza do funkcji składowej loc()
-W przypadkum, gdy wiersze są nazwane, możemy użyć tej nazwy do ich wywołania.
+W przypadkum, gdy wiersze są nazwane, możemy użyć tej nazwy do ich wywołania. Nazwa wiersza jest etykietą tego wiersza.
 ```
  # Wybranie jednego wiersza po nazwie:
  # Zostanie wybrany 1 wiersz o nazwie "pierwszy"
@@ -240,7 +241,7 @@ W przypadkum, gdy wiersze są nazwane, możemy użyć tej nazwy do ich wywołani
  # Zostaną wybrane 2 wiersze o nazwach "pierwszy" oraz "trzeci"
  listaWierszy = tabela.loc[ ["pierwszy", "trzeci"] ]
 ```
-Jeżeli natomiast wiersze nie mają nazw - to posługujemy sie numerami indeksów. Domyślnie indeksowanie odbywa się od zera, ale nic nie szkodzi na przeszkodzie, by nadać własne numery indeków. Odbywa się to na tej samej zasadzie co poprzedni, z tą różnicą, że numeru indeksu nie ujmujemy w cudzysłów ( "" ).
+Jeżeli natomiast wiersze nie mają nazw - to posługujemy sie numerami indeksów. Domyślnie indeksowanie odbywa się od zera, ale nic nie szkodzi na przeszkodzie, by nadać własne numery indeków. Ponumerowane indeksy równiesz są etykietą. Selekcja odbywa się na tej samej zasadzie co poprzednio, z tą różnicą, że numeru indeksu nie ujmujemy w cudzysłów ( "" ).
 ```
  # Wybranie jednego wiersza po indeksie:
  wiersz = tabela.loc[0]
@@ -251,6 +252,8 @@ Jeżeli natomiast wiersze nie mają nazw - to posługujemy sie numerami indeksó
  # Wybranie kilku wierszy przy użyciu listy
  listaWierszy = tabela.loc[ [0, 2] ]
 ```
+Co ważne, funkcja loc() wskazuje elementy używając etykiety ( nazwy ) wiersza. Ma to bezpoeślrednie przełożenie na wybór wierszy przy użyciu zakresu np. [0:4]. W ten sposób zostaną dostacrczone wiersze o indeksach pomiędzy 0 a 4 niezaleźnie od kolejnosći w jakiej znajdują się w tabeli. Dla liczb odbywa się to narastajaco, natomiast dla nazw - alfabetycznie. Wobec tego w tym przykładzie dostaniemy wiersze o etykiecie 0, 1, 2, 3, 4.
+To tu pojawia się zasadniacza różnica między funkcjami loc() oraz iloc(), gdzie ta druga bierze pod uwagę pozycję w tabeli, a nie etykietę wiersza.
 
 #### 2. Wskazanie wiersza poprzez indeks - funckja składowa iloc()
 #### 3. Użycie wurażenia warunkowego do przefiltrowania wierszy
@@ -348,4 +351,5 @@ https://www.edlitera.com/blog/posts/pandas-vs-excel-comparison \
 https://www.edlitera.com/en/blog/posts/pandas-merge-dataframes \
 https://www.edlitera.com/en/blog/posts/pandas-derived-columns \
 https://sparkbyexamples.com/pandas/pandas-sort-dataframe-by-multiple-columns/ 
-https://pandas.pydata.org/docs/getting_started/intro_tutorials/03_subset_data.html
+https://pandas.pydata.org/docs/getting_started/intro_tutorials/03_subset_data.html \
+https://www.listendata.com/2019/07/how-to-filter-pandas-dataframe.html
