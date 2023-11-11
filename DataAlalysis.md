@@ -256,10 +256,109 @@ Co ważne, funkcja loc() wskazuje elementy używając etykiety ( nazwy ) wiersza
 To tu pojawia się zasadniacza różnica między funkcjami loc() oraz iloc(), gdzie ta druga bierze pod uwagę pozycję w tabeli, a nie etykietę wiersza.
 
 #### 2. Wskazanie wiersza poprzez indeks - funckja składowa iloc()
-#### 3. Użycie wurażenia warunkowego do przefiltrowania wierszy
+
+#### 3. Użycie wyrażenia warunkowego do przefiltrowania wierszy
  
 
-## Łączenie danych z różnych tablic
+## Dodawanie kolumn i wierszy do tabeli ( DataFrame )
+### Dodawanie kolumn
+
+1. Poprzez odwołanie się do nieistniejącej nazwy kolumny
+2. Funkcją składową insert()
+3. Za pomocą funkcji concat()
+
+Przygotujmy zestaw danych, na kórych będzimy testować te metody.
+```
+# Przygotowanie zestawu danych
+dane = {
+        "Liczba1": [ 20, 43, 84, 9, 37 ],
+        "Liczba2": [ 12, 68, 33, 71, 18 ]
+       }
+
+# Zamiana słownika na DataFrame
+tabela = pd.DataFrame( dane )
+```
+Tak wygląda nasz DataFrame: \
+![Appending New Column - Data Set - Image ](img/appendingColumnData.JPG)
+
+#### 1. Poprzez odwołanie się do nieistniejącej nazwy kolumny
+Zdecydowanie najprostszą metodą tworzenia nowej kolumny w tabeli jest użycie składni:
+```
+# Pseudokod
+tabela["nazwa_nowej_kulumny"] = wartości
+```
+Tworzymy nową kolumnę o nazwie "Suma" i wypełniamy ją wartością wyrażenia po znaku "=". Dokonaliśmy tu zsumowania wartości z podanych kolumn dla każdego z wierszy. Tak powstały zestaw danych został przypisany do naszej nowej kolumny.
+```
+# Dodanie nowej kolumny, która zawiera sumę wartości z 2 wskazanych kolumn
+tabela["Suma"] = tabela["Liczba1"] + tabela["Liczba2"]
+```
+Oczywiście nic nie stoi na przeszkodzi wybrać interesujące nas kolumny innym sposobem. Dla przypomnienia użyliśmy funkcji iloc():
+```
+# Tutaj kulumny zostały wybrane po ich pozycji w tabeli
+tabela["suma"] = tabela.iloc[:, 0 ] + tabela.iloc[:, 1]
+```
+Efekt jest ten sam: \
+![Appending New Column - Sum - Image ](img/appendingColumnSum.JPG)
+
+#### 2. Funkcją składową insert()
+Inny sposobem jest użycie funkcji składowej klasy DataFrame - insert(). Jej zdecydowaną przewagą jest możliwość wybrania miejsca w tabeli, w które zostanie wstawiona nowa kolumna. 
+Składnia funkcji insert jest nasępująca:
+```
+# Pseudokod
+tabela.insert( pozycja_w_tabeli, "nazwa_nowej_kolumny", wartości )
+```
+W naszym przykadzie wstawimy nowe dane między kolumny o etykiecie "Liczba2" oraz "Suma". Pozycja w tabeli jest liczona od lewej począwszy od 0, zatem naszą pozycją będzie 2. Tym razem obliczymy różnicę wartości liczbowych, stąd taka też etykieta oraz wartości.
+```
+# Dodanie nowej kolumny funkcją składową insert()
+tabela.insert( 2, "Różnica", tabela["Liczba1"] - tabela["Liczba2"] )
+```
+Tak wygląda teraz nasza tabela: \
+![Appending New Column - Sum - Image ](img/appendingColumnDifference.JPG)
+
+#### 3. Za pomocą funkcji concat()
+Funkcja concat() łączy dane zawarte w różnych tabelach. 
+Przygotowujemy odpowiedni DataFrame na przykład dla odmiany, w ten sposób:
+```
+# Przygotowanie nowego DataFrame
+iloczyn = pd.DataFrame( tabela.iloc[:, 0] * tabela.iloc[:, 1], columns = ["Iloczyn"] )
+```
+Następnie postępujemy według wzoru:
+```
+# Pseudokod
+tabela = pd.concat( lista_tabel_do_złączania, axis = oś_łączenia, ignore_index = czy_ignorować_indexy )
+```
+Pierszym argumentem są tabele, które chcemy zołączyć zorganizowane w Python`ową listę obiektów. Parametr "axis" określa oś w któej chcemy złączyć dane - przyjmuje wartość: "0" dla wierszy oraz "1" dla kolumn. Wartością "ignore_index" w tym przypadku będzie "False", ponieważ chcemy zachować etykiety ( nazwy ) kolumn. Ten ostatni parametr ustawiony na "True" spowodowałby odrzucenie istniejących etykiet oraz ponumerowania kolumn od "0" ( będzie to użyteczne przy dołącazaniu wierszy ). \
+Nasze polecenie wygląda tak:
+```
+# Dodawanie kolumny funkcją składową concat()
+tabela = pd.concat( [tabela, iloczyn], axis = 1, ignore_index = False )
+```
+Tabela po dodaniu kolumny "Iloczyn": \
+![Appending New Column - Product - Image ](img/appendingColumnProduct.JPG)
+
+Operację arytmetyczną możemy przeprowadzić również wewnątrz funkcji concat(). Rezultatem wyrażenia: tabela["Liczba1"] / tabela["Liczba2"] jest tymczasowy obiekt klasy DataFrame, a więc nadaje się do użycia we wspomnianej funkcji. \
+Niestety tracimy tu możliwość bezpośredniego nadania etykiety nowej kolumnie. Jest to wykonalne za pomocą parametru "names", ale wymaga to wcześniejszego sporządzenia listy etykiet, gdyż podmieniamy w ten sposób wszystkie w powstałym DataFrame. Wydaje mi się, że prostszą metodą będzie zmiana nazwy kolumny po fakcie. \
+
+<font color = "red"> <<<<<<< --- 2 metody zmiany nazwy kolumny ------>>>>> </font>
+```
+# Możemy też to zrobić w jednej linijce, ale kolumna pozostaje nienazwana ( jej etykietą będzie numer )
+tabela = pd.concat( [tabela, tabela["Liczba1"] / tabela["Liczba2"] , axis = 1, ignore_index = False )
+
+# Zmiana nazwy kolumny z 0 na "Iloraz"
+tabela.rename( columns = { 0 : "Iloraz" }, inplace = True )
+
+# Inna metoda zmiany napisu na etykiecie
+tabela.columns = tabela.columns.str.replace("0", "Iloraz")
+
+# Zmiana nazwy kolumny - pozyskanie nazwy poprzez wycągnięcie jej z atrubutu columns dla pierwszej od końca kolumny
+tabela.rename( columns = { tabela.columns[-1] : "Iloraz" }, inplace = True )
+```
+Kolejna kolumna - "Iloraz": \
+![Appending New Column - Quotient - Image ](img/appendingColumnQuotient.JPG)
+
+## Usuwanie kolumn i wierszy z tabeli ( DataFrame )
+
+## Łączenie danych z różnych tabel
 Biblioteka Pandas umożliwia łączenie tabel z danymi poprzed dopasowywanie ich do siebie wegług kryterium. Najlepszym odpowiednikiem z programu Excel jest funkcja WYSZUKAJ.PIONOWO().
 Załóżmy, że mamy dwa zestawy danych zebrancyh w tabletach: 
 ```
