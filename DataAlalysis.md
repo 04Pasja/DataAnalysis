@@ -339,24 +339,35 @@ Tabela po dodaniu kolumny "Iloczyn": \
 Operację arytmetyczną możemy przeprowadzić również wewnątrz funkcji concat(). Rezultatem wyrażenia: tabela["Liczba1"] / tabela["Liczba2"] jest tymczasowy obiekt klasy DataFrame, a więc nadaje się do użycia we wspomnianej funkcji. \
 Niestety tracimy tu możliwość bezpośredniego nadania etykiety nowej kolumnie. Jest to wykonalne za pomocą parametru "names", ale wymaga to wcześniejszego sporządzenia listy etykiet, gdyż podmieniamy w ten sposób wszystkie w powstałym DataFrame. Wydaje mi się, że prostszą metodą będzie zmiana nazwy kolumny po fakcie. \
 
-<font color = "red"> <<<<<<< --- 2 metody zmiany nazwy kolumny ------>>>>> </font>
+Najpiew tworzymy nową kolumnę:
 ```
 # Możemy też to zrobić w jednej linijce, ale kolumna pozostaje nienazwana ( jej etykietą będzie numer )
 tabela = pd.concat( [tabela, tabela["Liczba1"] / tabela["Liczba2"] , axis = 1, ignore_index = False )
-
+```
+Następnie zmieniamy nazwę wybierając jedną z metod:
+```
 # Zmiana nazwy kolumny z 0 na "Iloraz"
 tabela.rename( columns = { 0 : "Iloraz" }, inplace = True )
 
-# Inna metoda zmiany napisu na etykiecie
-tabela.columns = tabela.columns.str.replace("0", "Iloraz")
-
 # Zmiana nazwy kolumny - pozyskanie nazwy poprzez wycągnięcie jej z atrubutu columns dla pierwszej od końca kolumny
 tabela.rename( columns = { tabela.columns[-1] : "Iloraz" }, inplace = True )
+
+# Inna metoda zmiany napisu na etykiecie
+tabela.columns = tabela.columns.str.replace("0", "Iloraz")
 ```
-Kolejna kolumna - "Iloraz": \
+W pierwszym przypadku używamy funkcji rename() na naszej tabeli z danymi. Jako parametr "columns" przesyłamy slownik ( doctionary ) zawierający nazwę obecną nazwę kolumny oraz nową nazwę. Jako, że wsyztkie wcześniejsze kolumny były nazwane to ta nowo utworzona przyjmuje etykietę: "0". Wobec tego zamienniamy "0" na ciąg znaków "Iloraz". \
+Bardziej odporną na błędy wersją tej metody jest wskazanie nazwy etykiety poprzez jakąś funkcję lub odwołanie się do atrybutu obiektu klasy DataFrame. W drugim przykładzie w nawiasach klamrowych "{}" jako pierszy argument wywołaliśmy atrybut "columns", który zwraca serię danych. Z tej serii bierzemy ostatni element przez podanie w nawiasach kwadratowych wartości "-1" ( symbolizuje to pierszy element kolekccji od końca ). W tym elemencie kryje się nazwa etykiety ostatniej kolumny tabeli - czyli tej, o którą nam chodziło. Jak wiemy kolumna została dodane na koniec tabeli zatem wszystko się zgadza, dopóki zniamę nazwy dokonujemy zaraz po wprowadzeniu nowej kolumny. \
+Drugą metodą jest użycie funkcji, która działa na ciągu znaków - str.replace(), by znależć i zamienić ciąg "0" na "Iloraz" w atrybucie "columns". Tak zmodyfikowaną serię danych przypisujemy do "tablela.columns". \
+
+W tabeli pojawia się nowo dadana kolumna o nazwie "Iloraz": \
 ![Appending New Column - Quotient - Image ](img/appendingColumnQuotient.JPG)
 
 ## Usuwanie kolumn i wierszy z tabeli ( DataFrame )
+
+### Usuwanie kolumn
+1. Dunkcja drop()
+
+### Usuwanie wierszy
 
 ## Łączenie danych z różnych tabel
 Biblioteka Pandas umożliwia łączenie tabel z danymi poprzed dopasowywanie ich do siebie wegług kryterium. Najlepszym odpowiednikiem z programu Excel jest funkcja WYSZUKAJ.PIONOWO().
