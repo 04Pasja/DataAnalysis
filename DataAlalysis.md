@@ -166,9 +166,7 @@ dataFrameZSlownika = pd.DataFrame( slownik )
 [Więcej użytecznych informacji na temat wczytywnia danych a plików.csv można znaleźć w dokumentacji Pandas - klikając tutaj](https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html)
 
 ## Wybieranie / zaznaczanie danych
-
-### Odwoływanie się do konkretnych kolumn
-
+Najbardziej elementarną operacją jaką przyjdzie nam najczęściej wykonywać jest selekcja części danych ze zbioru jakim jest DataFrame ( tabela ). Do konkretnych części tabeli możemy odwoływać się na wiele sposobów, w zależności jakieg oefektu oczekujemy. Przyjrzyjmy się najczęściej wykorzystywanym sposobom, używając prostej tabeli, którą sami sobie przygotujemy.
 ```
 # Przykładawa tabla danych ( DataFrame ) - utworzony za pomocą listy
 dane = [ ["Ala", "Nowak", 20], ["Urszula", "Kowalska", 34], ["Karol", "Strasburger", 76] ]
@@ -178,6 +176,15 @@ Rezultat:
 
 ![Creating Date Frame Image](img/createDataFrame.JPG)
 
+### Odwoływanie się do konkretnych kolumn
+
+1. Wyszczególnienie nazw ( etykiet ) interesujących nas kolumn
+2.
+3. 
+
+#### 1. Wyszczególnienie nazw ( etykiet ) interesujących nas kolumn
+
+Zdecydowanie najprostrszym sposobem selekcji konkretnej kolumny, bądź kolumn jest wskazanie bezpośrednio po etykiecie ( nazwie ) kolumny. Robimy to poprzez podanie nazwy naszej tabeli oraz umieszczenie w nawiasach kwadratowych etykiety interesującej nas kolumny. Taki obiekt możemy przypisać do zmiennej, tutaj "kolumna".
 ```
 # Selekcja jednej kolumny z tabeli danych ( DataFrame )
 kulumna = tabela[ "Imię" ]
@@ -200,7 +207,7 @@ kolumna = tabela.Imię
 ```
 Zamiast nawiasów kwadratowych stosujemy kropkę, a po niej podajemy nazwę kulumny. Zwróć uwagę, że nazwa kolumny nie znajduje sie w cudzysłowie. 
 
-W celu wybrania większej ilości kolumn możemy  użyć komendy:
+W celu wybrania większej ilości kolumn możemy napisać:
 
 ```
 # Wybór większej liczby kolumn
@@ -217,6 +224,20 @@ type( kilkaKolumn )
 ```
 
 Wywołując funkcję type() dla obiektu 'kilkaKolumn' otrzymujemy jako rezultat: pandas.core.frame.DataFrame, a więc mamy potwierdzenie, że jest to DataFrame. 
+
+#### 2.
+#### 3. Użycie funkcji iloc()
+Funkcja iloc() daje możliwość wybrania konkretnej "komórki" z daną z naszej tabeli polegając na pozycji. Jej użycie jest proste i przebiega według schematu:
+```
+interesujacaNasKomorkaDanych = tabela.iloc[ odWiersza : doWiersza, odKolumny : doKolumny ]
+```
+W tym momencie najbardziej interesuje nas pozyskanie kolumny, więc pierwszy argument ( do przecinka "," ) pomijamy i zostawiamy tam dwukropek ":". Jako drugi argiment podajemy pozycję kolumn - numeracja odbywa się jak zawsze od "0".
+```
+kolumny = tabela.iloc[ : , 1:3 ]
+```
+Co daje w rezultacie: \
+![Column Multi Selection Image](img/columnMultiSelection2.JPG)
+W ten sposób wybraliśmy z tabeli danych kolumny, które znajdowały się między pozycją "1" włącznie oraz z wyłączeniem pozycji "3". Wpisując "1:2" zostałaby wzięta tylko kolumna o pozycji "1". Matematycznie rzecz ujmując podajemy przedział prawostronnie otwarty < 1, 3 ). 
 
 ### Odwoływanie się do konkretnych wierszy
 Wybór konkretnego wiersza rózwnież można zrealizować w różny sposób. Możemy odwołać się do niego poprzez nr indeksu, nazwę, czy też przefiltrować pod kątej wartości lub spełnienia zadanego warunku.
@@ -256,6 +277,7 @@ Co ważne, funkcja loc() wskazuje elementy używając etykiety ( nazwy ) wiersza
 To tu pojawia się zasadniacza różnica między funkcjami loc() oraz iloc(), gdzie ta druga bierze pod uwagę pozycję w tabeli, a nie etykietę wiersza.
 
 #### 2. Wskazanie wiersza poprzez indeks - funckja składowa iloc()
+
 
 #### 3. Użycie wyrażenia warunkowego do przefiltrowania wierszy
  
@@ -449,6 +471,8 @@ W wyniku czego dostajemy: \
 
 ### Obserwacje
 Zwróć uwagę na rozmiar otzymywanych tabel w zależności od rodzaju użytego scalenia. To ile nasza wyjściowa tabela będdzie miała wierszy zależy od tego co było bazą do scalenia. W scaleniu lewostronnym bazą była pierwsza tabela ( lewa ), więc ilośći wierszy jest identyczna jak w pierwszej tabeli. Scalając prawostronnie naszą bazą jest druga tabela ( prawa ), zatem ilość wierszy będzie taka jak w prawej tabeli. W efekcje wewnętrzenego scalenia dostaniemy wiersze, które możemy skasyfikować jako część wspólną, natomiast wynikiem zewnętrzniego jest suma unikalnych wierszy. Dokonując scalenia krzyżowego ilość wierszy jest iloczynem ilości wierszy obu tabel ( zestawienie każdego elementu z każdym ).
+
+## Scalanie przy użyciu funkcji join()
 
 ## Web scraping - wyciądanie danych ze stron internetowych
 
