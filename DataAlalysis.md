@@ -180,7 +180,7 @@ Rezultat:
 
 1. Wyszczególnienie nazw ( etykiet ) interesujących nas kolumn
 2.
-3. 
+3. Użycie funkcji iloc()
 
 #### 1. Wyszczególnienie nazw ( etykiet ) interesujących nas kolumn
 
@@ -245,7 +245,7 @@ Wybór konkretnego wiersza rózwnież można zrealizować w różny sposób. Mo�
 Selekcji wierszy można dokonnać poprzez:
 1. Podanie nazwy wiersza do funkcji składowej loc()
 2. Wskazanie wiersza poprzez indeks - funckja składowa iloc()
-3. Użycie wurażenia warunkowego do przefiltrowania wierszy
+3. Użycie wyrażenia warunkowego do przefiltrowania wierszy
 
 #### 1. Podanie nazwy wiersza do funkcji składowej loc()
 W przypadkum, gdy wiersze są nazwane, możemy użyć tej nazwy do ich wywołania. Nazwa wiersza jest etykietą tego wiersza.
@@ -387,9 +387,31 @@ W tabeli pojawia się nowo dadana kolumna o nazwie "Iloraz": \
 ## Usuwanie kolumn i wierszy z tabeli ( DataFrame )
 
 ### Usuwanie kolumn
-1. Dunkcja drop()
+1. Funkcja drop()
+Za pomocą funkcji składowej drop() możemy usunąć zarównno wiersze jak i kolumny z tabeli ( DataFraame ) Wskazania, o którą konkretnie kolumnę lub wiersz nam chodzi  posługujemy się emblematem ( nazwą ). W obu przypadkach możemy posłużyć się dwoma składniami.
+Pierwszym sposobem jest podanie nazwy kolumny lub listy nazw oraz określenie osi w jakiej ma być zrealizowane zadanie ( dla kolumn  jest to "1" ).
+```
+# Dla pojedynczej kolumny
+tabela.drop( "Nazwisko", axis = 1)
+
+# Dla lisy kolumn
+tabela.drop( ["Nazwisko", "Wiek"], axis = 1 )
+```
+Drugim równoważnym rozwiązaniem jest podanie nazw do parametru "columns".
+```
+# Podajemy tylko jeden parametr
+tabela.drop( columns = "Nazwisko" )
+```
 
 ### Usuwanie wierszy
+Chcąc usunąć wiersze postępujemy analogicznie jak w przypadku kolumn, przy czym parametr "axis" przyjmuje wartość "0" lub wogóle go nie podajemy, gdyż domyślnie jest zerem. W drugim sposobie zamieniamy parametr "columns" na "index".
+```
+# Pierwsza metoda
+tabela.drop( "Wiersz3", axis = 0)
+
+# Tylko z jednym parametrem
+tabela.drop( index = "Wiersz3" )
+```
 
 ## Łączenie danych z różnych tabel
 Biblioteka Pandas umożliwia łączenie tabel z danymi poprzed dopasowywanie ich do siebie wegług kryterium. Najlepszym odpowiednikiem z programu Excel jest funkcja WYSZUKAJ.PIONOWO().
