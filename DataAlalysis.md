@@ -236,7 +236,7 @@ W tym momencie najbardziej interesuje nas pozyskanie kolumny, więc pierwszy arg
 kolumny = tabela.iloc[ : , 1:3 ]
 ```
 Co daje w rezultacie: \
-![Column Multi Selection Image](img/columnMultiSelection2.JPG)
+![Column Multi Selection Image](img/columnMultiSelection2.JPG) \
 W ten sposób wybraliśmy z tabeli danych kolumny, które znajdowały się między pozycją "1" włącznie oraz z wyłączeniem pozycji "3". Wpisując "1:2" zostałaby wzięta tylko kolumna o pozycji "1". Matematycznie rzecz ujmując podajemy przedział prawostronnie otwarty < 1, 3 ). 
 
 ### Odwoływanie się do konkretnych wierszy
@@ -377,17 +377,50 @@ tabela.rename( columns = { tabela.columns[-1] : "Iloraz" }, inplace = True )
 # Inna metoda zmiany napisu na etykiecie
 tabela.columns = tabela.columns.str.replace("0", "Iloraz")
 ```
-W pierwszym przypadku używamy funkcji rename() na naszej tabeli z danymi. Jako parametr "columns" przesyłamy slownik ( doctionary ) zawierający nazwę obecną nazwę kolumny oraz nową nazwę. Jako, że wsyztkie wcześniejsze kolumny były nazwane to ta nowo utworzona przyjmuje etykietę: "0". Wobec tego zamienniamy "0" na ciąg znaków "Iloraz". \
+W pierwszym przypadku używamy funkcji rename() na naszej tabeli z danymi. Jako parametr "columns" przesyłamy slownik ( dictionary ) zawierający nazwę obecną nazwę kolumny oraz nową nazwę. Jako, że wsyztkie wcześniejsze kolumny były nazwane to ta nowo utworzona przyjmuje etykietę: "0". Wobec tego zamienniamy "0" na ciąg znaków "Iloraz". \
 Bardziej odporną na błędy wersją tej metody jest wskazanie nazwy etykiety poprzez jakąś funkcję lub odwołanie się do atrybutu obiektu klasy DataFrame. W drugim przykładzie w nawiasach klamrowych "{}" jako pierszy argument wywołaliśmy atrybut "columns", który zwraca serię danych. Z tej serii bierzemy ostatni element przez podanie w nawiasach kwadratowych wartości "-1" ( symbolizuje to pierszy element kolekccji od końca ). W tym elemencie kryje się nazwa etykiety ostatniej kolumny tabeli - czyli tej, o którą nam chodziło. Jak wiemy kolumna została dodane na koniec tabeli zatem wszystko się zgadza, dopóki zniamę nazwy dokonujemy zaraz po wprowadzeniu nowej kolumny. \
-Drugą metodą jest użycie funkcji, która działa na ciągu znaków - str.replace(), by znależć i zamienić ciąg "0" na "Iloraz" w atrybucie "columns". Tak zmodyfikowaną serię danych przypisujemy do "tablela.columns". \
+Drugą metodą jest użycie funkcji, która działa na ciągu znaków - str.replace(), by znależć i zamienić ciąg "0" na "Iloraz" w atrybucie "columns". Tak zmodyfikowaną serię danych przypisujemy do "tablela.columns". 
 
 W tabeli pojawia się nowo dadana kolumna o nazwie "Iloraz": \
 ![Appending New Column - Quotient - Image ](img/appendingColumnQuotient.JPG)
 
+### Dodawanie wierszy
+Wróćmy do pierwotnej wejsji tabeli - tej, gdzie mamy wyłącznie kolumny "Liczba1" i "Liczba2". Przygotujmy równiez wiersze do dodania do tabeli w dwóch formmach: w postaci listy oraz słownika.
+```
+# Lista
+nowyWierszLista = [ 398, 141 ] 
+
+# Słownik
+nowyWierszSlownik = { "Liczba1": 398, "Liczba2": 141 }
+```
+
+1. Posłużenie się funkcją loc[]
+2. Funkcja składowa insert()
+3. Użycie funkcji concat()
+
+### 1. Posłużenie się funkcją loc[]
+Funkcja loc[] pozwala nam na dodanie nowego wiersza ...Użycie funkcji len() gwarantuje nam, że wiersz zostanie dodany na końcu tabeli. Funkcja ta zwraca ilość wierszy w tabeli, wiemy, że w Pythonie elementy numerujemy od zera "0", wobec tego element on numerze takim jak ich ilość będzie wskazywał na miejsce tuż za końcem tabeli.
+
+```
+# Dodanie wiersza na końcu tabeli
+tabela.loc[ len(tabela) ] = nowyWierszLista
+tabela.loc[ len(tabela) ] = nowyWierszSlownik
+```
+![Appending New Rows - Image](img/appendingRowsLoc.JPG) \
+Możemy też nazwać nasz nowy wiersz, co może być przydatne np. przy tworzeniu podsumowania całej kolumny poniżej. Wiersz zostanie dodany automatycznie na końcu tabeli.
+```
+# Utworzenie wiersza o konkretnej nazwie ( etykiecie )
+tabela.loc[ "Suma", : ] = [ tabela["Liczba1"].sum(), tabela.Liczba2.sum() ]
+```
+W wyniku czego dostaniemy: \
+![Appending New Rows - Sum - Image](img/appendingRowsSum.JPG) 
+### 2. Funkcją składową insert()
+### 3. Użycie funkcji concat()
+
 ## Usuwanie kolumn i wierszy z tabeli ( DataFrame )
 
 ### Usuwanie kolumn
-1. Funkcja drop()
+#### 1. Funkcja drop()
 Za pomocą funkcji składowej drop() możemy usunąć zarównno wiersze jak i kolumny z tabeli ( DataFraame ) Wskazania, o którą konkretnie kolumnę lub wiersz nam chodzi  posługujemy się emblematem ( nazwą ). W obu przypadkach możemy posłużyć się dwoma składniami.
 Pierwszym sposobem jest podanie nazwy kolumny lub listy nazw oraz określenie osi w jakiej ma być zrealizowane zadanie ( dla kolumn  jest to "1" ).
 ```
@@ -404,6 +437,7 @@ tabela.drop( columns = "Nazwisko" )
 ```
 
 ### Usuwanie wierszy
+#### 1. Funcja drop()
 Chcąc usunąć wiersze postępujemy analogicznie jak w przypadku kolumn, przy czym parametr "axis" przyjmuje wartość "0" lub wogóle go nie podajemy, gdyż domyślnie jest zerem. W drugim sposobie zamieniamy parametr "columns" na "index".
 ```
 # Pierwsza metoda
@@ -495,6 +529,13 @@ W wyniku czego dostajemy: \
 Zwróć uwagę na rozmiar otzymywanych tabel w zależności od rodzaju użytego scalenia. To ile nasza wyjściowa tabela będdzie miała wierszy zależy od tego co było bazą do scalenia. W scaleniu lewostronnym bazą była pierwsza tabela ( lewa ), więc ilośći wierszy jest identyczna jak w pierwszej tabeli. Scalając prawostronnie naszą bazą jest druga tabela ( prawa ), zatem ilość wierszy będzie taka jak w prawej tabeli. W efekcje wewnętrzenego scalenia dostaniemy wiersze, które możemy skasyfikować jako część wspólną, natomiast wynikiem zewnętrzniego jest suma unikalnych wierszy. Dokonując scalenia krzyżowego ilość wierszy jest iloczynem ilości wierszy obu tabel ( zestawienie każdego elementu z każdym ).
 
 ## Scalanie przy użyciu funkcji join()
+
+## Filtrowanie tabeli
+## Sortowanie tabeli
+
+# Wizualizacja danych
+## Narzędzia do wizualizacji danych
+## Tworzenie wykresów
 
 ## Web scraping - wyciądanie danych ze stron internetowych
 
