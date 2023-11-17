@@ -1,4 +1,4 @@
-# Analiza Danych - Python, Pandas
+#Analiza Danych - Python, Pandas
 
 ## Wymagane zasoby
 
@@ -179,8 +179,8 @@ Rezultat:
 ### Odwoływanie się do konkretnych kolumn
 
 1. Wyszczególnienie nazw ( etykiet ) interesujących nas kolumn
-2.
-3. Użycie funkcji iloc()
+2. Zastowsowanie funkcji loc[]
+3. Użycie funkcji iloc[]
 
 #### 1. Wyszczególnienie nazw ( etykiet ) interesujących nas kolumn
 
@@ -225,9 +225,32 @@ type( kilkaKolumn )
 
 Wywołując funkcję type() dla obiektu 'kilkaKolumn' otrzymujemy jako rezultat: pandas.core.frame.DataFrame, a więc mamy potwierdzenie, że jest to DataFrame. 
 
-#### 2.
+#### 2. Zastowsowanie funkcji loc[]
+Dostęp do konretnych kolumn za pośrednictwem etykiet można uzyskać również przy użyciu funkcji loc[]. 
+Schematycznie zastosowanie funkcji loc[] możemy to zapisać tak:
+```
+# Pseudokod
+dana = tabela.loc[ "etykietaWiersza", "etykietaKolumny" ]
+
+kilkaDanych = tabela.loc[ ["etykietaWiersza1", "etykietaWiersza2"] , ["etykietaKolumny1", "etykietaKolumny2] ]
+
+zakresDanych = tabela.loc[ "etykietaWierszaOd" : "etykietaWierszaDo" , "etykietaKolumnyOd" : "etykietaKolumnyDo" ]
+```
+Jak widać użycie funkcji loc[] nie ogranicza się jedynie do pracy w kolumnami. Za jej pomocą możemy wybrać konkretną komórkę lub rupę komórek z tabeli. Podobnie działa funkcja iloc[]
+```
+# Odwołanie do jednej kolumny
+kolumna = tabela.loc[ : , "Imię" ]
+
+# Wybranie kolumn podanych w liście
+kilkaKolumn = tabela.loc[ : , ["Imię", "Nazwisko"] ]
+
+# Selekcja kolumn przez zakres
+zakresKolmn = tabela.loc[ : , "Nazwisko" : "Wiek" ]
+```
+Zauważ, że odnosząc się wyłacznie do kolumn musimy pierwszy argument pozostawić pusty, umieśczając jedynie znak ":". Drugi argument podajemy po przecinku w interesującej nas formie. Jeśli nie zapiszemy tego w ten sposób to, albo zostanie asygrnalizowany błąd składni - gdy nie będzie ":", albo etykiety zostaną potraktowane jak etykiety wierszy - gdy nie edziedwukropka oraz przecinka. Postawienie dwukropka ornacza dla interpretera Pythona, że chcemy wziąć wszystkie wiersze z tabeli oraz nie jest to nasza pomyłka, iż argument pozostaje niesprecyzowany. Analogicznie działałoby to dla kolumn, ale zazwyczaj 2 argument się pomija gdy nie chcemy go precyzować.
+
 #### 3. Użycie funkcji iloc()
-Funkcja iloc() daje możliwość wybrania konkretnej "komórki" z daną z naszej tabeli polegając na pozycji. Jej użycie jest proste i przebiega według schematu:
+Funkcja iloc() daje możliwość wybrania konkretnej "komórki" z naszej tabeli polegając na pozycji. Jej użycie jest proste i przebiega według schematu:
 ```
 interesujacaNasKomorkaDanych = tabela.iloc[ odWiersza : doWiersza, odKolumny : doKolumny ]
 ```
@@ -273,7 +296,7 @@ Jeżeli natomiast wiersze nie mają nazw - to posługujemy sie numerami indeksó
  # Wybranie kilku wierszy przy użyciu listy
  listaWierszy = tabela.loc[ [0, 2] ]
 ```
-Co ważne, funkcja loc() wskazuje elementy używając etykiety ( nazwy ) wiersza. Ma to bezpoeślrednie przełożenie na wybór wierszy przy użyciu zakresu np. [0:4]. W ten sposób zostaną dostacrczone wiersze o indeksach pomiędzy 0 a 4 niezaleźnie od kolejnosći w jakiej znajdują się w tabeli. Dla liczb odbywa się to narastajaco, natomiast dla nazw - alfabetycznie. Wobec tego w tym przykładzie dostaniemy wiersze o etykiecie 0, 1, 2, 3, 4.
+Co ważne, funkcja loc() wskazuje elementy używając etykiety ( nazwy ) wiersza. Ma to bezpośrednie przełożenie na wybór wierszy przy użyciu zakresu np. [0:4]. W ten sposób zostaną dostacrczone wiersze o indeksach pomiędzy 0 a 4 niezaleźnie od kolejnosći w jakiej znajdują się w tabeli. Dla liczb odbywa się to narastajaco. Wobec tego w tym przykładzie dostaniemy wiersze o etykiecie 0, 1, 2, 3, 4.
 To tu pojawia się zasadniacza różnica między funkcjami loc() oraz iloc(), gdzie ta druga bierze pod uwagę pozycję w tabeli, a nie etykietę wiersza.
 
 #### 2. Wskazanie wiersza poprzez indeks - funckja składowa iloc()
