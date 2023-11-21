@@ -69,10 +69,27 @@ pip install xlwt openpyxl xlrd
 
 ## Pandas
 
+### Podstawowe typy danych w bibliotece Pandas
+Wyróżniamy dwa podstawowe typy danych w Pandas: Series oraz DataFrame. \ 
+Series to jednowymiarowa tabela danych - seria. Posiada swoją nazwę / etykietę ( Label ) i zawiera dane jednego typu np. liczbowe, ciągi znaków itp. \
+DataFrame jest, natomiast wielowymiarową tabelą danych. Struktura pozwala na przechowywanie różncyh typów dancyh. Można ją traktować jak tabelę lub arkusz znany z Excel'a,  bądź jak połączenie wielu serii dancyh ( Series ), gdzie każda seria stanowi jedną kolumnę. Tabela różwnież posiada swoje etykiety. Jest to zdecydowanie najczęściej używana klasa obiektów w bibliotece. \
+Każdą ze struktur można utworzyćna wiele sposobów. W zależlości, której klasy użyjemy, będziemy mieć do dyspozycji nieco inne funkcje składowe ( metody ) - funkcje pozwalające na manipulowanie danymi wewnątrz oraz całym obiektem / obiektami.
+
+
+### Importowanie biblioteki do projektu
+
+Żeby móc używać zasobów bibliotek ( funkcji biblioteczynch, struktur danych itp. ) należy najpierw je zaimplementować do projektu. Póki co będziemy posługiwać się dwoma bibliotekammi: Pandas oraz NumPy. Zatem zadeklarujmy ich użycie, najlepiej nadając przy okazji skróconą nazwę, którą będzie się łatwiej posługiwać. 
+```
+import Pandas as pd
+import numpy as np
+```
+
+### Tworzenie Series
+
 ### Tworzenie DataFrame
 
-W API Pandas DataFrame jest odpowiednikiem Excel`owego arkusza. 
-DataFrame możemy stworzyć na kilka sposobów. 
+Jak już wiemy w API Pandas DataFrame jest odpowiednikiem Excel`owego arkusza lub tabeli. \
+DataFrame możemy stworzyć na kilka sposobów: 
 1. Za pomocą 'tablicy' ( Array ) z biblioteki NumPy
 2. Przy użyciu Python`owej listy ( bez użycia NumPy )
 4. Importując dane z pliku zewnętrznego
