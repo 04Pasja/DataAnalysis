@@ -86,6 +86,31 @@ import numpy as np
 
 ### Tworzenie Series
 
+1. Za pomocą tablicy
+2. Przy użyciu słownika ( dictionary )
+
+#### 1. Za pomocą tablicy
+```
+# Utworzenie tablicy
+tablica = [12, 54]
+
+# Utworzenie serii
+seriaZTablicy = pd.Series( tablica, index = ["A", "B"] )
+```
+#### 2. Przy użyciu słownika ( dictionary )
+```
+# Przygotowanie słownika
+slownik = { "A": 11,
+            "B": 41,
+            "C": 78,
+            "D": 34 }
+
+# Utworzenie serii ze słownika
+seriaZeSlownika = pd.Series( slownik, name = "AtrybytName" )
+
+# Nadanie nazwy indeksom
+seriaZeSlownika.index.name = "NazwaDlaIndexów"
+```
 ### Tworzenie DataFrame
 
 Jak już wiemy w API Pandas DataFrame jest odpowiednikiem Excel`owego arkusza lub tabeli. \
